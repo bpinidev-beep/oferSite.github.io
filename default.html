@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miles PCs</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 2rem; }
+  h1 { text-align: center; margin-bottom: 1rem; }
+  .disclaimer-top {
+    background: #ffdddd;
+    color: #a00;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #a00;
+    border-radius: 5px;
+  }
+  .form-box {
+    background: white; 
+    padding: 1.5rem; 
+    max-width: 700px; 
+    margin: auto;
+    border-radius: 10px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .form-row {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .form-row label { flex: 1 0 150px; font-weight: bold; margin-bottom: 0.3rem; }
+  .form-row input, .form-row select, .form-row textarea {
+    flex: 2 0 200px;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  .form-row textarea { resize: vertical; min-height: 80px; }
+  .disclaimer-box {
+    flex: 2 0 200px;
+    margin-left: 1rem;
+    margin-top: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    background: #ffdddd;
+    color: #a00;
+    border: 1px solid #a00;
+    border-radius: 5px;
+    font-size: 0.85rem;
+  }
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  button:hover { background: #444; }
+  .inline-success {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: #ddffdd;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+  }
+  @media screen and (max-width: 600px) {
+    .form-row { flex-direction: column; align-items: stretch; }
+    .form-row input, .form-row select, .form-row textarea, .disclaimer-box {
+      flex: 1 0 auto;
+      margin-left: 0;
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Miles PCs</h1>
+
+<div class="disclaimer-top">
+⚠ A budget under 3000 might not be possible!
+</div>
+
+<div class="form-box">
+  <div class="form-row">
+    <label for="name">📝 Name:</label>
+    <input type="text" id="name" placeholder="Enter your name">
+    <div class="disclaimer-box">Enter your name here.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="email">📧 Your Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <div class="disclaimer-box">We will send a confirmation to this email.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="budget">💰 Budget ($):</label>
+    <input type="number" id="budget" placeholder="e.g. 5000">
+    <div class="disclaimer-box">Recommended 3000+. Budget under may not be possible.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="color">🎨 Color:</label>
+    <select id="color">
+      <option>Black</option>
+      <option>White</option>
+      <option>I don't care, just pick the cheapest</option>
+      <option>Black-RGB</option>
+      <option>White-RGB</option>
+    </select>
+    <div class="disclaimer-box">May affect performance or availability.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="priority">⚡ Priority:</label>
+    <select id="priority">
+      <option value="">-- Select --</option>
+      <option>Gaming Performance</option>
+      <option>Productivity</option>
+      <option>FPS per dollar</option>
+      <option>Aesthetics</option>
+    </select>
+    <div class="disclaimer-box">Select what matters most in your PC.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="notes">📝 Extra Notes:</label>
+    <textarea id="notes" placeholder="Any extra notes for your build..."></textarea>
+    <div class="disclaimer-box">Optional notes for your build request.</div>
+  </div>
+
+  <div class="form-row">
+    <label for="preferences">⚙️ Preferences:</label>
+    <textarea id="preferences" placeholder="Specific preferences (brands, features, etc.)"></textarea>
+    <div class="disclaimer-box">Optional preferences to guide the build.</div>
+  </div>
+
+  <!-- Gmail button -->
+  <button onclick="copyGmail()">Copy Gmail Info</button>
+  <div id="copy-gmail-success" class="inline-success">
+    ✅ Gmail info copied! Please send the email to 1miles.computers@gmail.com.
+  </div>
+
+  <!-- PayBox button -->
+  <button onclick="copyPayBox()">Copy PayBox Link</button>
+  <div id="copy-paybox-success" class="inline-success">
+    ✅ PayBox link copied!  
+  </div>
+
+  <!-- PayPal button -->
+  <button onclick="copyPayPal()">Copy PayPal Link</button>
+  <div id="copy-paypal-success" class="inline-success">
+    ✅ PayPal link copied!  
+  </div>
+</div>
+
+<script>
+const email = "1miles.computers@gmail.com";          
+const payBoxLink = "https://paybox.com/YOUR_PAYBOX_LINK";  
+const payPalLink = "https://paypal.me/YOUR_PAYPAL_LINK";  
+
+function copyGmail() {
+  const name = document.getElementById("name").value.trim();
+  const userEmail = document.getElementById("email").value.trim();
+  const budget = document.getElementById("budget").value.trim();
+  const color = document.getElementById("color").value;
+  const priority = document.getElementById("priority").value;
+  const notes = document.getElementById("notes").value.trim();
+  const preferences = document.getElementById("preferences").value.trim();
+
+  if (!name || !budget || !priority) {
+    alert("Please fill in all required fields (Name, Budget, Priority).");
+    return;
+  }
+
+  const gmailText = 
+`To: ${email}
+Subject: New PC Request
+
+Name: ${name}
+Email: ${userEmail}
+Budget: $${budget}
+Color: ${color}
+Priority: ${priority}
+Extra Notes: ${notes}
+Preferences: ${preferences}`;
+
+  copyToClipboard(gmailText, "copy-gmail-success");
+}
+
+function copyPayBox() {
+  copyToClipboard(payBoxLink, "copy-paybox-success");
+}
+
+function copyPayPal() {
+  copyToClipboard(payPalLink, "copy-paypal-success");
+}
+
+function copyToClipboard(text, successId) {
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = text;
+  document.body.appendChild(tempTextarea);
+  tempTextarea.select();
+  tempTextarea.setSelectionRange(0, 99999); // For mobile
+  try {
+    document.execCommand("copy");
+    document.getElementById(successId).style.display = "block";
+  } catch (err) {
+    alert("Failed to copy! Please copy manually.");
+  }
+  document.body.removeChild(tempTextarea);
+}
+
+// Set Black as default on page load
+window.onload = () => { document.getElementById("color").value = "Black"; };
+</script>
+</body>
+</html>
